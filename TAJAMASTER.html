@@ -4,153 +4,338 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TAJA-MASTER | 타자마스터</title>
-    <!-- 검색 엔진 최적화(SEO) 기본 메타 태그 -->
-    <meta name="description" content="온라인 무료 타자 연습 게임 TAJA-MASTER! 단어 연습, 문장 연습, 산성비 게임으로 타자 실력을 키워보세요.">
+    <meta name="description" content="아기자기하고 재미있는 온라인 타자 연습 게임 TAJA-MASTER!">
     <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #e0f2fe 0%, #fef3c7 50%, #fce7f3 100%);
+            --card-bg: #ffffff;
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --accent-yellow: #fef08a;
+            --accent-pink: #fbcfe8;
+            --text-main: #1e293b;
+            --text-sub: #64748b;
+            --border-radius: 24px;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         body {
-            background-color: #0f172a;
-            color: #f8fafc;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background: var(--bg-gradient);
+            color: var(--text-main);
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
         }
 
-        .container {
+        /* 상단 네비게이션 미니 바 */
+        .top-bar {
             width: 100%;
-            max-width: 600px;
-            padding: 2.5rem;
-            background: #1e293b;
-            border-radius: 20px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+            max-width: 960px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .brand-badge {
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .user-info-bar {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-sub);
+        }
+
+        /* 메인 레이아웃 (좌: 게임설정 / 우: 랭킹) */
+        .main-wrapper {
+            width: 100%;
+            max-width: 960px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .main-wrapper {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 카드 공통 스타일 */
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.08);
+            border: 3px solid #ffffff;
+        }
+
+        /* 메인 게임 설정 영역 */
+        .game-setup {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             text-align: center;
         }
 
-        .logo {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #38bdf8;
+        .main-title {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: #312e81;
             margin-bottom: 0.5rem;
-            letter-spacing: 2px;
         }
 
-        .subtitle {
-            color: #94a3b8;
-            font-size: 1rem;
-            margin-bottom: 2.5rem;
-        }
-
-        .mode-selection {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
+        .main-subtitle {
+            color: var(--text-sub);
+            font-size: 0.95rem;
             margin-bottom: 2rem;
         }
 
-        .mode-card {
-            background: #334155;
-            padding: 1.2rem;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border: 2px solid transparent;
-            text-align: left;
+        /* 언어/모드 선택 탭 */
+        .tab-group {
+            display: flex;
+            background: #f1f5f9;
+            padding: 0.3rem;
+            border-radius: 50px;
+            margin-bottom: 1.5rem;
+            gap: 0.3rem;
         }
 
-        .mode-card:hover {
-            border-color: #38bdf8;
-            transform: translateY(-2px);
-            background: #475569;
-        }
-
-        .mode-title {
-            font-size: 1.2rem;
+        .tab-btn {
+            border: none;
+            background: transparent;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
             font-weight: 700;
-            color: #f1f5f9;
-            margin-bottom: 0.3rem;
+            font-size: 0.9rem;
+            color: var(--text-sub);
+            cursor: pointer;
+            transition: all 0.2s;
         }
 
-        .mode-desc {
-            font-size: 0.875rem;
-            color: #cbd5e1;
+        .tab-btn.active {
+            background: var(--primary);
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
         }
 
+        /* 입력 폼 필드 */
+        .input-group {
+            width: 100%;
+            max-width: 320px;
+            margin-bottom: 1rem;
+        }
+
+        .custom-input {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .custom-input:focus {
+            border-color: var(--primary);
+        }
+
+        /* 게임 시작 큰 버튼 */
         .start-btn {
             width: 100%;
-            padding: 1rem;
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #0f172a;
-            background-color: #38bdf8;
+            max-width: 320px;
+            padding: 1.1rem;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #ffffff;
+            background: linear-gradient(135deg, #6366f1 0%, #818cf8 100%);
             border: none;
-            border-radius: 12px;
+            border-radius: 18px;
             cursor: pointer;
-            transition: background-color 0.2s;
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 1rem;
         }
 
         .start-btn:hover {
-            background-color: #0284c7;
-            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(99, 102, 241, 0.4);
         }
 
-        .footer {
-            margin-top: 2rem;
-            font-size: 0.8rem;
-            color: #64748b;
+        /* 우측 명예의 전당 (랭킹) */
+        .ranking-card {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ranking-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #312e81;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .ranking-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .ranking-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.7rem 1rem;
+            background: #f8fafc;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .rank-num {
+            display: inline-block;
+            width: 22px;
+            height: 22px;
+            line-height: 22px;
+            text-align: center;
+            background: #cbd5e1;
+            color: #fff;
+            border-radius: 50%;
+            font-size: 0.75rem;
+            margin-right: 0.5rem;
+        }
+
+        .rank-1 { background: #fbbf24; }
+        .rank-2 { background: #94a3b8; }
+        .rank-3 { background: #b45309; }
+
+        .score-val {
+            color: var(--primary);
+            font-weight: 700;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- 메인 타이틀 및 로고 -->
-        <h1 class="logo">⌨️ TAJA-MASTER</h1>
-        <p class="subtitle">타자 연습의 새로운 기준, 타자마스터에 오신 것을 환영합니다!</p>
-
-        <!-- 게임 모드 선택 영역 -->
-        <div class="mode-selection">
-            <div class="mode-card" onclick="selectMode('word')">
-                <div class="mode-title">🔤 낱말 연습</div>
-                <div class="mode-desc">기초 단어들을 빠르게 입력하며 기본기를 다집니다.</div>
-            </div>
-
-            <div class="mode-card" onclick="selectMode('sentence')">
-                <div class="mode-title">📝 짧은 글 연습</div>
-                <div class="mode-desc">명언과 짧은 문장을 입력하며 WPM(타수)을 측정합니다.</div>
-            </div>
-
-            <div class="mode-card" onclick="selectMode('rain')">
-                <div class="mode-title">🌧️ 산성비 게임</div>
-                <div class="mode-desc">위에서 떨어지는 단어가 땅에 닿기 전에 제거하세요!</div>
-            </div>
+    <!-- 상단 미니 바 -->
+    <div class="top-bar">
+        <div class="brand-badge">
+            <span>⌨️</span> TAJA-MASTER
         </div>
-
-        <!-- 게임 시작 버튼 -->
-        <button class="start-btn" onclick="startGame()">게임 시작하기</button>
-
-        <div class="footer">
-            &copy; TAJA-MASTER. All rights reserved.
+        <div class="user-info-bar">
+            <span>레벨: 초보 마스터</span>
+            <span>최고 타수: 0 WPM</span>
         </div>
     </div>
 
-    <script>
-        let selectedMode = 'word'; // 기본 모드
+    <!-- 메인 레이아웃 -->
+    <div class="main-wrapper">
+        
+        <!-- 좌측: 메인 설정 및 시작 -->
+        <div class="card game-setup">
+            <h1 class="main-title">✨ 타자마스터 모험하기</h1>
+            <p class="main-subtitle">원하는 모드를 선택하고 타자 실력을 쑥쑥 키워보세요!</p>
 
-        function selectMode(mode) {
-            selectedMode = mode;
-            alert(mode + ' 모드가 선택되었습니다!');
+            <!-- 언어 선택 -->
+            <div class="tab-group">
+                <button class="tab-btn active" onclick="setLang('kr')">🇰🇷 한글 타자</button>
+                <button class="tab-btn" onclick="setLang('en')">🇺🇸 영어 타자</button>
+            </div>
+
+            <!-- 모드 선택 -->
+            <div class="tab-group" style="margin-bottom: 2rem;">
+                <button class="tab-btn active" onclick="setMode('word')">낱말</button>
+                <button class="tab-btn" onclick="setMode('sentence')">짧은 글</button>
+                <button class="tab-btn" onclick="setMode('rain')">산성비</button>
+            </div>
+
+            <!-- 닉네임 입력 -->
+            <div class="input-group">
+                <input type="text" class="custom-input" placeholder="닉네임을 입력하세요" id="nickname">
+            </div>
+
+            <!-- 시작 버튼 -->
+            <button class="start-btn" onclick="startGame()">게임 시작하기 🚀</button>
+        </div>
+
+        <!-- 우측: 명예의 전당 -->
+        <div class="card ranking-card">
+            <h2 class="ranking-title">🏆 명예의 전당 TOP 5</h2>
+            <ul class="ranking-list">
+                <li class="ranking-item">
+                    <div><span class="rank-num rank-1">1</span> 타자왕김타자</div>
+                    <span class="score-val">680 WPM</span>
+                </li>
+                <li class="ranking-item">
+                    <div><span class="rank-num rank-2">2</span> 번개손가락</div>
+                    <span class="score-val">550 WPM</span>
+                </li>
+                <li class="ranking-item">
+                    <div><span class="rank-num rank-3">3</span> 구름달리기</div>
+                    <span class="score-val">490 WPM</span>
+                </li>
+                <li class="ranking-item">
+                    <div><span class="rank-num">4</span> 키보드전사</div>
+                    <span class="score-val">420 WPM</span>
+                </li>
+                <li class="ranking-item">
+                    <div><span class="rank-num">5</span> 초보자123</div>
+                    <span class="score-val">380 WPM</span>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <script>
+        let currentLang = 'kr';
+        let currentMode = 'word';
+
+        function setLang(lang) {
+            currentLang = lang;
+            console.log('언어 변경:', lang);
+        }
+
+        function setMode(mode) {
+            currentMode = mode;
+            console.log('모드 변경:', mode);
         }
 
         function startGame() {
-            // 나중에 실제 게임 화면으로 이동하도록 구현
-            alert(selectedMode + ' 모드로 게임을 시작합니다!');
+            const nickname = document.getElementById('nickname').value;
+            if(!nickname) {
+                alert('닉네임을 입력해 주세요!');
+                return;
+            }
+            alert(`[${nickname}]님, ${currentLang === 'kr' ? '한글' : '영어'} ${currentMode} 모드로 게임을 시작합니다!`);
         }
     </script>
 </body>
