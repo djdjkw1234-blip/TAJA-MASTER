@@ -1,1 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAJA-MASTER | 타자마스터</title>
+    <!-- 검색 엔진 최적화(SEO) 기본 메타 태그 -->
+    <meta name="description" content="온라인 무료 타자 연습 게임 TAJA-MASTER! 단어 연습, 문장 연습, 산성비 게임으로 타자 실력을 키워보세요.">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+        }
 
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            padding: 2.5rem;
+            background: #1e293b;
+            border-radius: 20px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #38bdf8;
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            color: #94a3b8;
+            font-size: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .mode-selection {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .mode-card {
+            background: #334155;
+            padding: 1.2rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+            text-align: left;
+        }
+
+        .mode-card:hover {
+            border-color: #38bdf8;
+            transform: translateY(-2px);
+            background: #475569;
+        }
+
+        .mode-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-bottom: 0.3rem;
+        }
+
+        .mode-desc {
+            font-size: 0.875rem;
+            color: #cbd5e1;
+        }
+
+        .start-btn {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #0f172a;
+            background-color: #38bdf8;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .start-btn:hover {
+            background-color: #0284c7;
+            color: #ffffff;
+        }
+
+        .footer {
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- 메인 타이틀 및 로고 -->
+        <h1 class="logo">⌨️ TAJA-MASTER</h1>
+        <p class="subtitle">타자 연습의 새로운 기준, 타자마스터에 오신 것을 환영합니다!</p>
+
+        <!-- 게임 모드 선택 영역 -->
+        <div class="mode-selection">
+            <div class="mode-card" onclick="selectMode('word')">
+                <div class="mode-title">🔤 낱말 연습</div>
+                <div class="mode-desc">기초 단어들을 빠르게 입력하며 기본기를 다집니다.</div>
+            </div>
+
+            <div class="mode-card" onclick="selectMode('sentence')">
+                <div class="mode-title">📝 짧은 글 연습</div>
+                <div class="mode-desc">명언과 짧은 문장을 입력하며 WPM(타수)을 측정합니다.</div>
+            </div>
+
+            <div class="mode-card" onclick="selectMode('rain')">
+                <div class="mode-title">🌧️ 산성비 게임</div>
+                <div class="mode-desc">위에서 떨어지는 단어가 땅에 닿기 전에 제거하세요!</div>
+            </div>
+        </div>
+
+        <!-- 게임 시작 버튼 -->
+        <button class="start-btn" onclick="startGame()">게임 시작하기</button>
+
+        <div class="footer">
+            &copy; TAJA-MASTER. All rights reserved.
+        </div>
+    </div>
+
+    <script>
+        let selectedMode = 'word'; // 기본 모드
+
+        function selectMode(mode) {
+            selectedMode = mode;
+            alert(mode + ' 모드가 선택되었습니다!');
+        }
+
+        function startGame() {
+            // 나중에 실제 게임 화면으로 이동하도록 구현
+            alert(selectedMode + ' 모드로 게임을 시작합니다!');
+        }
+    </script>
+</body>
+</html>
